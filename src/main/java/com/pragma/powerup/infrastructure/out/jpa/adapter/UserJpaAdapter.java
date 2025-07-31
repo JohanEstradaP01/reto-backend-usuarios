@@ -2,6 +2,7 @@ package com.pragma.powerup.infrastructure.out.jpa.adapter;
 
 import com.pragma.powerup.domain.model.User;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
+import com.pragma.powerup.infrastructure.exception.UserAlreadyExist;
 import com.pragma.powerup.infrastructure.out.jpa.entity.UserEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.UserEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IUserRepository;
@@ -18,7 +19,7 @@ public class UserJpaAdapter implements IUserPersistencePort {
     @Override
     public void saveUser(User user){
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            System.out.println("Lanzar error");
+            throw new UserAlreadyExist();
         }
         userRepository.save(userEntityMapper.toEntity(user));
     }
