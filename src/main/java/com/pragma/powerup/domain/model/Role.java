@@ -3,7 +3,7 @@ package com.pragma.powerup.domain.model;
 public enum Role {
 
     ADMIN("Administrador"),
-    CUSTOMER("Cliente"),
+    USER("Cliente"),
     OWNER("Dueño"),
     EMPLOYEE("Empleado");
 
