@@ -25,7 +25,7 @@ public class AdminUseCase implements IAdminServicePort {
         if (Period.between(birthDate, LocalDate.now()).getYears() < 18){
             throw new UnderageOwnerException();
         }
-        userRegistrationService.registerUser(owner);
+        userRegistrationService.registerUser(owner, Role.OWNER);
     }
 
 }
