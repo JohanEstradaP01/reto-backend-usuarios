@@ -1,6 +1,8 @@
 package com.pragma.powerup.infrastructure.exceptionhandler;
 
+import com.pragma.powerup.domain.exception.EmailFormatNoValid;
 import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
+import com.pragma.powerup.domain.exception.PhoneNumberFormatNoValid;
 import com.pragma.powerup.domain.exception.UnderageOwnerException;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import org.springframework.http.HttpStatus;
@@ -44,7 +46,6 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
         Map<String, String> errores = new HashMap<>();
         for (FieldError fe : ex.getBindingResult().getFieldErrors()) {
@@ -53,6 +54,20 @@ public class ControllerAdvisor {
         return ResponseEntity
                 .status(BAD_REQUEST)
                 .body(errores);
+    }
+
+    @ExceptionHandler(EmailFormatNoValid.class)
+    public ResponseEntity<String> emailValidationError(EmailFormatNoValid ex){
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body("Formato de email no válido");
+    }
+
+    @ExceptionHandler(PhoneNumberFormatNoValid.class)
+    public ResponseEntity<String> phoneNumberNoValid(PhoneNumberFormatNoValid ex){
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body("Formato de teléfono no valido");
     }
 
 }

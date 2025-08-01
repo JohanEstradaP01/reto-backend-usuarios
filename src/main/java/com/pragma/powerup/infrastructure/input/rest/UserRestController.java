@@ -2,7 +2,9 @@ package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.UserRequestDto;
 import com.pragma.powerup.application.handler.IAdminHandler;
+import com.pragma.powerup.domain.exception.EmailFormatNoValid;
 import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
+import com.pragma.powerup.domain.exception.PhoneNumberFormatNoValid;
 import com.pragma.powerup.domain.exception.UnderageOwnerException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,12 +28,10 @@ public class UserRestController {
     private final IAdminHandler adminHandler;
 
     @Operation(summary = "Create an owner")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Owner added", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Owner already exist", content = @Content)
-    })
     @PostMapping("/owner")
-    public ResponseEntity<Void> createOwner(@Valid @RequestBody UserRequestDto userRequestDto) throws UnderageOwnerException, OwnerAlreadyExist {
+    public ResponseEntity<Void> createOwner(@Valid @RequestBody UserRequestDto userRequestDto)
+            throws UnderageOwnerException, OwnerAlreadyExist,
+            EmailFormatNoValid, PhoneNumberFormatNoValid {
         adminHandler.createOwner(userRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
