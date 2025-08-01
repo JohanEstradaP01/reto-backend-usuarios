@@ -21,7 +21,7 @@ public class UserRequestDto {
     private String documentNumber;
 
     @NotBlank
-    @Pattern(regexp = "^\\+\\d{1,12}$", message = "Teléfono no válido")
+    @Pattern(regexp = "^\\+?\\d{1,13}$", message = "Teléfono no válido")
     private String phone;
 
     @Past
