@@ -40,4 +40,6 @@ public class AdminUseCase implements IAdminServicePort {
         userRegistrationService.registerUser(owner, Role.OWNER);
     }
 
+
+
 }

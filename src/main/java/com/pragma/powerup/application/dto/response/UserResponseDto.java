@@ -1,4 +1,4 @@
-package com.pragma.powerup.application.dto.request;
+package com.pragma.powerup.application.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class UserRequestDto {
+public class UserResponseDto {
 
     private Long id;
 

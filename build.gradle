@@ -47,6 +47,7 @@ dependencies {
 
 	implementation "org.springdoc:springdoc-openapi-ui:${openApiVersion}"
 	implementation "org.springdoc:springdoc-openapi-webflux-ui:${openApiVersion}"
+
 }
 
 tasks.named('test') {

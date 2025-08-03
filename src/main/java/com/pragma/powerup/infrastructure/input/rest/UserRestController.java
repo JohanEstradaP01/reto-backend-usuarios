@@ -1,6 +1,8 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.UserRequestDto;
+import com.pragma.powerup.application.dto.response.UserResponseDto;
+import com.pragma.powerup.application.handler.IAUserHandler;
 import com.pragma.powerup.application.handler.IAdminHandler;
 import com.pragma.powerup.domain.exception.EmailFormatNoValid;
 import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
@@ -13,10 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -26,6 +25,7 @@ import javax.validation.Valid;
 public class UserRestController {
 
     private final IAdminHandler adminHandler;
+    private final IAUserHandler userHandler;
 
     @Operation(summary = "Create an owner")
     @PostMapping("/owner")
@@ -34,6 +34,13 @@ public class UserRestController {
             EmailFormatNoValid, PhoneNumberFormatNoValid {
         adminHandler.createOwner(userRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userHandler.geUser(id));
     }
 
 }
