@@ -4,6 +4,7 @@ import com.pragma.powerup.application.dto.request.UserRequestDto;
 import com.pragma.powerup.application.dto.response.UserResponseDto;
 import com.pragma.powerup.application.handler.IAUserHandler;
 import com.pragma.powerup.application.handler.IAdminHandler;
+import com.pragma.powerup.application.handler.IOwnerHandler;
 import com.pragma.powerup.domain.exception.EmailFormatNoValid;
 import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
 import com.pragma.powerup.domain.exception.PhoneNumberFormatNoValid;
@@ -23,6 +24,7 @@ public class UserRestController {
 
     private final IAdminHandler adminHandler;
     private final IAUserHandler userHandler;
+    private final IOwnerHandler ownerHandler;
 
     @Operation(summary = "Create an owner")
     @PostMapping("/owner")
@@ -38,6 +40,12 @@ public class UserRestController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(userHandler.geUser(id));
+    }
+
+    @PostMapping("/employee")
+    public ResponseEntity<Void> createEmployee(@RequestBody UserRequestDto userRequestDto) throws OwnerAlreadyExist {
+        ownerHandler.createEmployee(userRequestDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }

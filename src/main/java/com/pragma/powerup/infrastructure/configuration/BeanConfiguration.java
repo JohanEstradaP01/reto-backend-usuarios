@@ -1,12 +1,14 @@
 package com.pragma.powerup.infrastructure.configuration;
 
 import com.pragma.powerup.domain.api.IAdminServicePort;
+import com.pragma.powerup.domain.api.IOwnerUseCase;
 import com.pragma.powerup.domain.api.IUserServicePort;
 import com.pragma.powerup.domain.service.IUserRegistrationService;
 import com.pragma.powerup.domain.service.UserRegisterService;
 import com.pragma.powerup.domain.spi.IPasswordEncryptor;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
 import com.pragma.powerup.domain.usecase.AdminUseCase;
+import com.pragma.powerup.domain.usecase.OwnerUseCase;
 import com.pragma.powerup.domain.usecase.UserUseCase;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.UserJpaAdapter;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IObjectEntityMapper;
@@ -71,6 +73,11 @@ public class BeanConfiguration {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public IOwnerUseCase ownerUseCase(){
+        return new OwnerUseCase(userRegistrationService());
     }
 
 }
