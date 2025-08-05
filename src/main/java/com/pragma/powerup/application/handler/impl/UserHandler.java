@@ -9,10 +9,7 @@ import com.pragma.powerup.infrastructure.out.jpa.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class UserHandler implements IAUserHandler {
 

@@ -9,15 +9,12 @@ import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
 import com.pragma.powerup.domain.exception.PhoneNumberFormatNoValid;
 import com.pragma.powerup.domain.exception.UnderageOwnerException;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.security.Principal;
 
 @RequiredArgsConstructor
 @RestController
@@ -29,7 +26,7 @@ public class UserRestController {
 
     @Operation(summary = "Create an owner")
     @PostMapping("/owner")
-    public ResponseEntity<Void> createOwner(@Valid @RequestBody UserRequestDto userRequestDto)
+    public ResponseEntity<Void> createOwner(@RequestBody UserRequestDto userRequestDto)
             throws UnderageOwnerException, OwnerAlreadyExist,
             EmailFormatNoValid, PhoneNumberFormatNoValid {
         adminHandler.createOwner(userRequestDto);

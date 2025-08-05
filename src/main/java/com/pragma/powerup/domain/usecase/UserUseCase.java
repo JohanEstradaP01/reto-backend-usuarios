@@ -2,19 +2,20 @@ package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IUserServicePort;
 import com.pragma.powerup.domain.model.User;
+import com.pragma.powerup.domain.service.IUserRegistrationService;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
 
 public class UserUseCase implements IUserServicePort {
 
-    private final IUserPersistencePort userPersistencePort;
+    private final IUserRegistrationService userRegistrationService;
 
-    public UserUseCase(IUserPersistencePort userPersistencePort){
-        this.userPersistencePort = userPersistencePort;
+    public UserUseCase(IUserRegistrationService userRegistrationService){
+        this.userRegistrationService = userRegistrationService;
     }
 
     @Override
     public User getUser(Long id) {
-        return userPersistencePort.getUser(id);
+        return userRegistrationService.getUser(id);
     }
 
     @Override

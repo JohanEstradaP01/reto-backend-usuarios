@@ -1,9 +1,8 @@
 package com.pragma.powerup.application.dto.request;
 
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Getter

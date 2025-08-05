@@ -10,4 +10,6 @@ public interface IUserRegistrationService {
 
     public void registerUser(User user, Role role) throws OwnerAlreadyExist;
 
+    public User getUser(Long id);
+
 }
