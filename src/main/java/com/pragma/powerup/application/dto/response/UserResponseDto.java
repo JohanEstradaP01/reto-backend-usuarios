@@ -1,4 +1,4 @@
-package com.pragma.powerup.application.dto.request;
+package com.pragma.powerup.application.dto.response;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class UserRequestDto {
+public class UserResponseDto {
 
     private Long id;
 

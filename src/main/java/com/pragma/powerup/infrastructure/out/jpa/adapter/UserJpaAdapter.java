@@ -1,5 +1,6 @@
 package com.pragma.powerup.infrastructure.out.jpa.adapter;
 
+import com.pragma.powerup.domain.exception.UserNotFound;
 import com.pragma.powerup.domain.model.User;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
 import com.pragma.powerup.infrastructure.exception.UserAlreadyExist;
@@ -15,6 +16,15 @@ public class UserJpaAdapter implements IUserPersistencePort {
 
     private final IUserRepository userRepository;
     private final UserEntityMapper userEntityMapper;
+
+    @Override
+    public User getUser(Long id) {
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if (userEntity.isEmpty()){
+            throw new UserNotFound();
+        }
+        return userEntityMapper.toUser(userEntity.get());
+    }
 
     @Override
     public void saveUser(User user){

@@ -16,6 +16,7 @@ public interface UserRequestMapper {
 
     default User toUser(UserRequestDto dto) {
         return User.builder()
+                .id(dto.getId())
                 .name(dto.getName())
                 .lastName(dto.getLastName())
                 .documentNumber(dto.getDocumentNumber())

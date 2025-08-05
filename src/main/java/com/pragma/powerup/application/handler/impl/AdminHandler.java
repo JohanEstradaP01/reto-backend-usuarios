@@ -13,11 +13,8 @@ import com.pragma.powerup.domain.usecase.AdminUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class AdminHandler implements IAdminHandler {
 
     private final IAdminServicePort adminUseCase;
