@@ -8,4 +8,6 @@ public interface IUserServicePort {
 
     public void registerUser(User user);
 
+    public User getUserByEmail(String email);
+
 }

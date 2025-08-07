@@ -1,9 +1,6 @@
 package com.pragma.powerup.infrastructure.exceptionhandler;
 
-import com.pragma.powerup.domain.exception.EmailFormatNoValid;
-import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
-import com.pragma.powerup.domain.exception.PhoneNumberFormatNoValid;
-import com.pragma.powerup.domain.exception.UnderageOwnerException;
+import com.pragma.powerup.domain.exception.*;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,6 +65,19 @@ public class ControllerAdvisor {
         return ResponseEntity
                 .status(BAD_REQUEST)
                 .body("Formato de teléfono no valido");
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<String> incompleteFields(NullPointerException ex){
+        return ResponseEntity
+                .status(BAD_REQUEST)
+                .body("Los campos requeridos no se enviaron correctamente.");
+    }
+
+    @ExceptionHandler(UserNotFound.class)
+    public ResponseEntity<String> userNotFound(UserNotFound ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("El usuario no fue encontrado");
     }
 
 }

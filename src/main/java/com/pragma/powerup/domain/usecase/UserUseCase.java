@@ -21,4 +21,9 @@ public class UserUseCase implements IUserServicePort {
     @Override
     public void registerUser(User user) {
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRegistrationService.getUserByEmail(email);
+    }
 }

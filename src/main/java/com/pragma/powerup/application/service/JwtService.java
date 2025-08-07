@@ -1,9 +1,12 @@
 package com.pragma.powerup.application.service;
 
+import com.pragma.powerup.domain.api.IUserServicePort;
+import com.pragma.powerup.domain.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -17,7 +20,10 @@ import java.util.function.Function;
 
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
+
+    private final IUserServicePort userServicePort;
 
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
@@ -41,7 +47,18 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", userDetails.getAuthorities().stream()
+                .findFirst()
+                .map(grantedAuthority -> grantedAuthority.getAuthority().replace("ROLE_", "")) // Extrae "ADMIN" de "ROLE_ADMIN"
+                .orElse("USER"));
+
+        User user = userServicePort.getUserByEmail(userDetails.getUsername());
+        System.out.println(userDetails.getUsername());
+        System.out.println(user.getDocumentNumber());
+        claims.put("identification", user.getDocumentNumber());
+
+        return generateToken(claims, userDetails);
     }
 
     public String generateToken(

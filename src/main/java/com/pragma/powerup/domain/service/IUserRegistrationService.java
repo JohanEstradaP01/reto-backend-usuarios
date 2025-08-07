@@ -12,4 +12,6 @@ public interface IUserRegistrationService {
 
     public User getUser(Long id);
 
+    public User getUserByEmail(String email);
+
 }

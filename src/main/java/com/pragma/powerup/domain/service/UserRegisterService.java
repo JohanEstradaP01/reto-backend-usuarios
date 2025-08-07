@@ -28,7 +28,7 @@ public class UserRegisterService implements IUserRegistrationService{
     @Override
     public void registerUser(User user, Role role) throws OwnerAlreadyExist {
         user.setRole(role);
-        //  user.setPassword(passwordEncryptor.encrypt(user.getPassword()));
+        user.setPassword(passwordEncryptor.encrypt(user.getPassword()));
         if (userPersistencePort.findByEmail(user.getEmail()) != null){
             throw new OwnerAlreadyExist();
         }
@@ -38,6 +38,11 @@ public class UserRegisterService implements IUserRegistrationService{
     @Override
     public User getUser(Long id) {
         return userPersistencePort.getUser(id);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userPersistencePort.findByEmail(email);
     }
 
 }
