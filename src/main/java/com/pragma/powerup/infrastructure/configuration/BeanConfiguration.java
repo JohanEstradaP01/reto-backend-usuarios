@@ -26,6 +26,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 @Configuration
 @RequiredArgsConstructor
 public class BeanConfiguration {
@@ -78,6 +80,11 @@ public class BeanConfiguration {
     @Bean
     public IOwnerUseCase ownerUseCase(){
         return new OwnerUseCase(userRegistrationService());
+    }
+
+    @Bean
+    public ConcurrentHashMap<String, Integer> attemptsMap() {
+        return new ConcurrentHashMap<>();
     }
 
 }

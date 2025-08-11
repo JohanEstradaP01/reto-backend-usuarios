@@ -45,4 +45,6 @@ public class UserRequestDto {
 
     private String role;
 
+    private Long restaurantId;
+
 }

@@ -23,7 +23,7 @@ import java.util.List;
 public class UserEntity implements UserDetails {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String lastName;
@@ -34,6 +34,7 @@ public class UserEntity implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    private Long restaurantId;
 
     public Long getId() {
         return id;
@@ -69,6 +70,10 @@ public class UserEntity implements UserDetails {
 
     public Role getRole() {
         return role;
+    }
+
+    public Long getRestaurantId() {
+        return restaurantId;
     }
 
     @Override

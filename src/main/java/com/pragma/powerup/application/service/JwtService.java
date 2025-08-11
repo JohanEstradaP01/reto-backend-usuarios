@@ -54,8 +54,6 @@ public class JwtService {
                 .orElse("USER"));
 
         User user = userServicePort.getUserByEmail(userDetails.getUsername());
-        System.out.println(userDetails.getUsername());
-        System.out.println(user.getDocumentNumber());
         claims.put("identification", user.getDocumentNumber());
 
         return generateToken(claims, userDetails);

@@ -2,8 +2,10 @@ package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.AuthenticationRequestDto;
 import com.pragma.powerup.application.dto.request.RegisterRequestDto;
+import com.pragma.powerup.application.dto.request.UserRequestDto;
 import com.pragma.powerup.application.dto.response.AuthenticationResponseDto;
 import com.pragma.powerup.application.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponseDto> register(
-            @RequestBody RegisterRequestDto request
+            @Valid @RequestBody UserRequestDto request
     ) {
         return ResponseEntity.ok(service.register(request));
     }

@@ -14,4 +14,6 @@ public interface IUserRegistrationService {
 
     public User getUserByEmail(String email);
 
+    public void  createEmployee(User user);
+
 }

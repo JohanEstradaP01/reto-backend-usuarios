@@ -25,6 +25,7 @@ public interface UserRequestMapper {
                 .email(dto.getEmail())
                 .password(dto.getPassword())
                 .role(mapRole(dto.getRole()))
+                .restaurantId(dto.getRestaurantId())
                 .build();
     }
 

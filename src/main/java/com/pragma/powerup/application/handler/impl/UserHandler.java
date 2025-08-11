@@ -1,5 +1,6 @@
 package com.pragma.powerup.application.handler.impl;
 
+import com.pragma.powerup.application.dto.request.UserRequestDto;
 import com.pragma.powerup.application.dto.response.UserResponseDto;
 import com.pragma.powerup.application.handler.IAUserHandler;
 import com.pragma.powerup.application.mapper.UserRequestMapper;
@@ -19,5 +20,15 @@ public class UserHandler implements IAUserHandler {
     @Override
     public UserResponseDto geUser(Long id) {
         return userResponseMapper.toUSerResponse(userServicePort.getUser(id));
+    }
+
+    @Override
+    public UserResponseDto getUserByEmail(String email) {
+        return userResponseMapper.toUSerResponse(userServicePort.getUserByEmail(email));
+    }
+
+    @Override
+    public void createUser(UserRequestDto userRequestDto) {
+        userServicePort.registerUser(userResponseMapper.toUser(userRequestDto));
     }
 }

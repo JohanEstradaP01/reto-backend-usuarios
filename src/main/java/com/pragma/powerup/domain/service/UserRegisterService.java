@@ -19,6 +19,7 @@ public class UserRegisterService implements IUserRegistrationService{
     @Override
     public void registerUser(User user) throws OwnerAlreadyExist {
         user.setPassword(passwordEncryptor.encrypt(user.getPassword()));
+        user.setRestaurantId(null);
         if (userPersistencePort.findByEmail(user.getEmail()) != null){
             throw new OwnerAlreadyExist();
         }
@@ -43,6 +44,11 @@ public class UserRegisterService implements IUserRegistrationService{
     @Override
     public User getUserByEmail(String email) {
         return userPersistencePort.findByEmail(email);
+    }
+
+    @Override
+    public void createEmployee(User user) {
+        userPersistencePort.saveUser(user);
     }
 
 }
