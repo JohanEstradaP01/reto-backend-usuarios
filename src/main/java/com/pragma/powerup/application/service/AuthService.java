@@ -34,6 +34,10 @@ public class AuthService {
                 .name(request.getName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .lastName(request.getLastName())
+                .documentNumber(request.getDocumentNumber())
+                .phone(request.getPhone())
+                .birthDate(request.getBirthDate())
                 .build();
         userHandler.createUser(request);
         userRepository.save(userEntityMapper.toEntity(user));

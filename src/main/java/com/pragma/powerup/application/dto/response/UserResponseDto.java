@@ -38,4 +38,6 @@ public class UserResponseDto {
 
     private String role;
 
+    private Long restaurantId;
+
 }

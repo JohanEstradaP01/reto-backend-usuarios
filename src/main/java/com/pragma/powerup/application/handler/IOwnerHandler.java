@@ -5,6 +5,6 @@ import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
 
 public interface IOwnerHandler {
 
-    public void createEmployee(UserRequestDto userRequestDto) throws OwnerAlreadyExist;
+    public void createEmployee(UserRequestDto userRequestDto, String ownerEmail) throws OwnerAlreadyExist;
 
 }

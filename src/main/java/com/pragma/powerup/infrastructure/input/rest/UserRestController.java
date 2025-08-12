@@ -40,7 +40,7 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EMPLOYEE')")
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
         return ResponseEntity
@@ -50,18 +50,18 @@ public class UserRestController {
 
     @PreAuthorize("hasRole('OWNER')")
     @PostMapping("/employee")
-    public ResponseEntity<Void> createEmployee(@Valid @RequestBody UserRequestDto userRequestDto) throws OwnerAlreadyExist {
-        ownerHandler.createEmployee(userRequestDto);
+    public ResponseEntity<Void> createEmployee(@Valid @RequestBody UserRequestDto userRequestDto, HttpServletRequest httpServletRequest) throws OwnerAlreadyExist {
+        String token = httpServletRequest.getHeader("Authorization").substring(7);
+        String email = jwtService.extractUsername(token);
+        ownerHandler.createEmployee(userRequestDto, email);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER','EMPLOYEE')")
     @GetMapping
     public ResponseEntity<UserResponseDto> getUserByToken(HttpServletRequest servletRequest){
         String token = servletRequest.getHeader("Authorization").substring(7);
         String email = jwtService.extractUsername(token);
-        System.out.println(email);
-        System.out.println(userHandler.getUserByEmail(email));
         return ResponseEntity.ok(userHandler.getUserByEmail(email));
     }
 

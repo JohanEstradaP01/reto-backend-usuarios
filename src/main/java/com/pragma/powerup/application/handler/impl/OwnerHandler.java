@@ -17,8 +17,8 @@ public class OwnerHandler implements IOwnerHandler {
     private final UserRequestMapper userRequestMapper;
 
     @Override
-    public void createEmployee(UserRequestDto userRequestDto) throws OwnerAlreadyExist {
-        ownerUseCase.createEmployee(userRequestMapper.toUser(userRequestDto));
+    public void createEmployee(UserRequestDto userRequestDto, String ownerEmail) throws OwnerAlreadyExist {
+        ownerUseCase.createEmployee(userRequestMapper.toUser(userRequestDto), ownerEmail);
     }
 
 }

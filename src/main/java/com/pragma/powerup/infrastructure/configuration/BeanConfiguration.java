@@ -6,11 +6,14 @@ import com.pragma.powerup.domain.api.IUserServicePort;
 import com.pragma.powerup.domain.service.IUserRegistrationService;
 import com.pragma.powerup.domain.service.UserRegisterService;
 import com.pragma.powerup.domain.spi.IPasswordEncryptor;
+import com.pragma.powerup.domain.spi.IRestaurantConsultPort;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
 import com.pragma.powerup.domain.usecase.AdminUseCase;
 import com.pragma.powerup.domain.usecase.OwnerUseCase;
 import com.pragma.powerup.domain.usecase.UserUseCase;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.UserJpaAdapter;
+import com.pragma.powerup.infrastructure.out.jpa.client.FeignClient;
+import com.pragma.powerup.infrastructure.out.jpa.client.implementation.RestaurantClient;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IObjectEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.UserEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IObjectRepository;
@@ -36,6 +39,7 @@ public class BeanConfiguration {
     private final IObjectEntityMapper objectEntityMapper;
     private final UserEntityMapper userEntityMapper;
     private final IUserRepository userRepository;
+    private final FeignClient feignClient;
 
 
     @Bean
@@ -79,12 +83,17 @@ public class BeanConfiguration {
 
     @Bean
     public IOwnerUseCase ownerUseCase(){
-        return new OwnerUseCase(userRegistrationService());
+        return new OwnerUseCase(userRegistrationService(), restaurantConsultPort());
     }
 
     @Bean
     public ConcurrentHashMap<String, Integer> attemptsMap() {
         return new ConcurrentHashMap<>();
+    }
+
+    @Bean
+    public IRestaurantConsultPort restaurantConsultPort(){
+        return new RestaurantClient(feignClient);
     }
 
 }
