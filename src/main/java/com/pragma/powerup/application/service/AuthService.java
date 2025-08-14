@@ -6,6 +6,8 @@ import com.pragma.powerup.application.dto.request.UserRequestDto;
 import com.pragma.powerup.application.dto.response.AuthenticationResponseDto;
 import com.pragma.powerup.application.handler.impl.UserHandler;
 import com.pragma.powerup.domain.model.User;
+import com.pragma.powerup.infrastructure.exception.AuthAttemptsException;
+import com.pragma.powerup.infrastructure.exception.AuthFailedException;
 import com.pragma.powerup.infrastructure.out.jpa.entity.UserEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.UserEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IUserRepository;
@@ -51,7 +53,7 @@ public class AuthService {
         String email = authenticationRequestDto.getEmail();
         if(!attempts.containsKey(email)){attempts.put(email, 0);}
         if(attempts.get(email) >= 2){
-            throw new RuntimeException();
+            throw new AuthAttemptsException();
         }
         try {
             authenticationManager.authenticate(
@@ -65,8 +67,7 @@ public class AuthService {
                 attempts.put(email, 0);
             }
             attempts.put(email, attempts.get(email) + 1);
-            System.out.println(attempts.get(email));
-            throw new RuntimeException();
+            throw new AuthFailedException();
         }
         UserEntity user = userRepository.findByEmail(authenticationRequestDto.getEmail()).get();
         var jwtToken = jwtService.generateToken(user);

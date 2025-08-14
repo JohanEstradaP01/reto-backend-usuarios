@@ -50,8 +50,9 @@ public class UserRestController {
 
     @PreAuthorize("hasRole('OWNER')")
     @PostMapping("/employee")
-    public ResponseEntity<Void> createEmployee(@Valid @RequestBody UserRequestDto userRequestDto, HttpServletRequest httpServletRequest) throws OwnerAlreadyExist {
-        String token = httpServletRequest.getHeader("Authorization").substring(7);
+    public ResponseEntity<Void> createEmployee(@Valid @RequestBody UserRequestDto userRequestDto, @RequestHeader("Authorization") String authorization) throws OwnerAlreadyExist {
+        String token = authorization.substring(7);
+        System.out.println(token);
         String email = jwtService.extractUsername(token);
         ownerHandler.createEmployee(userRequestDto, email);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -59,8 +60,9 @@ public class UserRestController {
 
     @PreAuthorize("hasAnyRole('USER','EMPLOYEE')")
     @GetMapping
-    public ResponseEntity<UserResponseDto> getUserByToken(HttpServletRequest servletRequest){
-        String token = servletRequest.getHeader("Authorization").substring(7);
+    public ResponseEntity<UserResponseDto> getUserByToken(@RequestHeader("Authorization") String authorization){
+        String token = authorization.substring(7);
+        System.out.println(token);
         String email = jwtService.extractUsername(token);
         return ResponseEntity.ok(userHandler.getUserByEmail(email));
     }

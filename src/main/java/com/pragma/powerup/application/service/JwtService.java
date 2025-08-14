@@ -55,6 +55,7 @@ public class JwtService {
 
         User user = userServicePort.getUserByEmail(userDetails.getUsername());
         claims.put("identification", user.getDocumentNumber());
+        claims.put("id", user.getId());
 
         return generateToken(claims, userDetails);
     }
