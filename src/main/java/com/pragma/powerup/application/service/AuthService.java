@@ -5,6 +5,7 @@ import com.pragma.powerup.application.dto.request.RegisterRequestDto;
 import com.pragma.powerup.application.dto.request.UserRequestDto;
 import com.pragma.powerup.application.dto.response.AuthenticationResponseDto;
 import com.pragma.powerup.application.handler.impl.UserHandler;
+import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
 import com.pragma.powerup.domain.model.User;
 import com.pragma.powerup.infrastructure.exception.AuthAttemptsException;
 import com.pragma.powerup.infrastructure.exception.AuthFailedException;
@@ -31,7 +32,7 @@ public class AuthService {
     private final UserEntityMapper userEntityMapper;
     private final UserHandler userHandler;
 
-    public AuthenticationResponseDto register(UserRequestDto request) {
+    public AuthenticationResponseDto register(UserRequestDto request) throws OwnerAlreadyExist {
         User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())

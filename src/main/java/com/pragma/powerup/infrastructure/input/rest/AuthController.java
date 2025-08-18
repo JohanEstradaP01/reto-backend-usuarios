@@ -5,6 +5,7 @@ import com.pragma.powerup.application.dto.request.RegisterRequestDto;
 import com.pragma.powerup.application.dto.request.UserRequestDto;
 import com.pragma.powerup.application.dto.response.AuthenticationResponseDto;
 import com.pragma.powerup.application.service.AuthService;
+import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponseDto> register(
             @Valid @RequestBody UserRequestDto request
-    ) {
+    ) throws OwnerAlreadyExist {
         return ResponseEntity.ok(service.register(request));
     }
 

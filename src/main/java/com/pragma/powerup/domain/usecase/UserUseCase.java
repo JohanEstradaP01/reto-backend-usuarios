@@ -1,6 +1,7 @@
 package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IUserServicePort;
+import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
 import com.pragma.powerup.domain.model.User;
 import com.pragma.powerup.domain.service.IUserRegistrationService;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;
@@ -19,7 +20,8 @@ public class UserUseCase implements IUserServicePort {
     }
 
     @Override
-    public void registerUser(User user) {
+    public void registerUser(User user) throws OwnerAlreadyExist {
+        userRegistrationService.registerUser(user);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.pragma.powerup.application.handler.IAUserHandler;
 import com.pragma.powerup.application.mapper.UserRequestMapper;
 import com.pragma.powerup.application.mapper.UserResponseMapper;
 import com.pragma.powerup.domain.api.IUserServicePort;
+import com.pragma.powerup.domain.exception.OwnerAlreadyExist;
 import com.pragma.powerup.infrastructure.out.jpa.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class UserHandler implements IAUserHandler {
     }
 
     @Override
-    public void createUser(UserRequestDto userRequestDto) {
+    public void createUser(UserRequestDto userRequestDto) throws OwnerAlreadyExist {
         userServicePort.registerUser(userResponseMapper.toUser(userRequestDto));
     }
 }
